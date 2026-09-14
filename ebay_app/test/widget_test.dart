@@ -11,20 +11,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ebay_app/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('sign in advances to the password step', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Sign in'), findsOneWidget);
+    expect(find.text('Email or username'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.enterText(find.byType(TextField), 'buyer@example.com');
+    await tester.tap(find.text('Continue'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Enter your password'), findsOneWidget);
+    expect(find.text('buyer@example.com'), findsOneWidget);
   });
 }
